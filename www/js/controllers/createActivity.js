@@ -2,10 +2,9 @@ angular.module('meetMeApp.controller.createActivity', [])
   .controller('CreateActivityCtrl', ['$scope', 'googleMapLatLon', 'postToServer', '$location', 'userData', '$navigate', function ($scope, googleMapLatLon, postToServer, $location, userData, $navigate) {
 
     $scope.createActivityUser = userData.getUser();
-    console.log($scope.createActivityUser);
-    console.log(googleMapLatLon);
-    $scope.userID = $scope.createActivityUser._id;
-    $scope.latlon = googleMapLatLon.get();
+    // $scope.latlon = [null, null];
+    // $scope.latlon = $scope.latlon === [null, null] ? googleMapLatLon.get() : $scope.latlon;
+    //$scope.userID = $scope.createActivityUser._id;
 
     $scope.$navigate = $navigate;
     //$scope.picData = $scope.createActivityUser.facebook.picture.data.url;
@@ -17,28 +16,28 @@ angular.module('meetMeApp.controller.createActivity', [])
         time: date[0].value,
         total:1,
         photo: $scope.picData,
-        activity: $scope.activity,
-        location: $scope.latlon,
-        userId: $scope.userID || 123
+        //activity: $scope.activity,
+        location: [lat,lng]//$scope.latlon,
+        //userId: $scope.userID || 123
       }, function(){
         $scope.$navigate.go('/map', 'slide');
       });
     };
 
-    var initializeInfo = function() {   // initialize information, called at bottom of page
-      $scope.activities = [ ['coffee','a.png'],
-                            ['park','b.png'],
-                            ['holding baby','img/glyphicons/png/glyphicons_075_stroller.png'],
-                            ['bar', 'c.png'],
-                            ['reading', 'd.png'],
-                            ['sports', 'e.png'],
-                            ['music', 'f.png'],
-                            ['...', 'more.png']];
-      $scope.picData = postToServer.getPic();
-      $scope.eventName = postToServer.getName();
-      $scope.description = postToServer.getDesc();
-      $scope.date = '10/12/13 12:10:20';
-    };
+    // var initializeInfo = function() {   // initialize information, called at bottom of page
+    //   $scope.activities = [ ['coffee','a.png'],
+    //                         ['park','b.png'],
+    //                         ['holding baby','img/glyphicons/png/glyphicons_075_stroller.png'],
+    //                         ['bar', 'c.png'],
+    //                         ['reading', 'd.png'],
+    //                         ['sports', 'e.png'],
+    //                         ['music', 'f.png'],
+    //                         ['...', 'more.png']];
+    //   $scope.picData = postToServer.getPic();
+    //   $scope.eventName = postToServer.getName();
+    //   $scope.description = postToServer.getDesc();
+    //   $scope.date = '10/12/13 12:10:20';
+    // };
 
     $scope.showOptions = function () {
       
@@ -49,12 +48,10 @@ angular.module('meetMeApp.controller.createActivity', [])
     };
 
     $scope.saveName = function() {
-      alert('save name');
       postToServer.saveName($scope.eventName);
     };
 
     $scope.saveDesc = function() {
-      alert('saved desc');
       postToServer.saveDesc($scope.description);
     };
 
@@ -74,7 +71,6 @@ angular.module('meetMeApp.controller.createActivity', [])
 
     $scope.saveDate = function() {
       var date = angular.element('#eventDate');
-      console.log(date[0].value);
       $scope.date = date[0].value;
     };
 
@@ -89,7 +85,6 @@ angular.module('meetMeApp.controller.createActivity', [])
           saveToPhotoAlbum: true
       };
       // Take picture using device camera and retrieve image as base64-encoded string
-      console.log(navigator);
       navigator.camera.getPicture(onSuccess,onFail,options);
     };
 
@@ -102,7 +97,6 @@ angular.module('meetMeApp.controller.createActivity', [])
           encodingType: 0     // 0=JPG 1=PNG
       };
       // Take picture using device camera and retrieve image as base64-encoded string
-      console.log(navigator);
       navigator.camera.getPicture(onSuccess,onFail,options);
     };
 
@@ -115,6 +109,6 @@ angular.module('meetMeApp.controller.createActivity', [])
       // alert('err', e);
     };
 
-    initializeInfo();
+    //initializeInfo();
 
   }]);

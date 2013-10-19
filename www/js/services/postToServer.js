@@ -7,7 +7,7 @@ angular.module("meetMeApp.service.postToServer", [])
         .success(function(data) {
           cb();
       }).error(function(error){
-        alert('error',error);
+        console.log('error'+error);
       });
     };
     return {

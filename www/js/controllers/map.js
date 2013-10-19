@@ -1,6 +1,6 @@
 
 angular.module('meetMeApp.controller.map', ['ui.map'])
-  .controller('MapCtrl', ['$scope', '$compile', 'userData', '$http', 'googleMapLatLon', function ($scope, $compile, userData, $http, googleMapLatLon) {
+  .controller('MapCtrl', ['$scope', '$compile', 'userData', '$http', 'googleMapLatLon', '$timeout', function ($scope, $compile, userData, $http, googleMapLatLon, $timeout) {
     var date = new Date();
     var dates = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
@@ -88,13 +88,38 @@ angular.module('meetMeApp.controller.map', ['ui.map'])
       keyboardShortcuts: true
     };
 
+    // $scope.createActivity = function () {
+    //   console.log('creating activity');
+    //   var getLocation = $timeout(function () {
+    //     var error = false;
+    //     try{
+    //       var lat = $scope.myMap.getCenter().lat();
+    //       var lng = $scope.myMap.getCenter().lng();
+    //     }
+    //     catch (e){
+    //       error = true;
+    //       $timeout(getLocation, 0);
+    //     }
+    //     if (error === false) {
+    //       googleMapLatLon.set(lat, lng) ;
+    //       alert(lat, lng);
+    //       window.location.href = '#/createActivity';
+    //     }
+    //   },0);
+    // }
+
     $scope.createActivity = function () {
       console.log('creating activity');
-      var lat = $scope.myMap.getCenter().lat();
-      var lng = $scope.myMap.getCenter().lng();
-      googleMapLatLon.set(lat, lng) ;
-      window.location.href = '#/createActivity';
+      lat = $scope.myMap.getCenter().lat();
+      lng = $scope.myMap.getCenter().lng();
+
+      // $timeout(function(){
+        googleMapLatLon.set(lat, lng) ;
+        console.log(lat+','+lng);
+        window.location.href = '#/createActivity';
+      // },0);
     }
+
 
     $scope.addMarker = function (objs) {
 
